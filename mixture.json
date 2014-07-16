@@ -1,11 +1,15 @@
 {
     "debug": false,
     "lintScripts": false,
-    "preprocessorLocations": "Sass,js,css",
+    "preprocessorLocations": [
+        "Sass",
+        "js",
+        "css"
+    ],
     "preprocessorScriptOutput": "js",
     "preprocessorStyleOutput": "css",
-    "projectName": "Doidge's Starting Point",
-    "projectDescription": "A Simple starter project including the Sassifaction Mixin Library & Bourbon for good measure",
+    "projectName": "Doidge\u0027s Starting Point",
+    "projectDescription": "A Simple starter project including the Sassifaction Mixin Library \u0026 Bourbon for good measure",
     "publishedId": null,
     "serverHostname": null,
     "serverPort": null,
@@ -18,10 +22,6 @@
     "simpleModeFileTypes": null,
     "modelSource": null,
     "domain": null,
-    "convertHtmlOutput": null,
-    "convertHtmlDefault": null,
-    "convertHtmlIgnore": null,
-    "convertHtmlExtension": null,
     "followLeader": false,
     "routes": null,
     "customRuby": false,
@@ -29,14 +29,15 @@
     "remoteDebugPort": 0,
     "optimiseImages": true,
     "password": null,
-    "ignoreDir": "js",
+    "ignoreDir": [
+        "js"
+    ],
     "customTodos": null,
-    "ftpSettings": null,
     "autoPrefixer": {
         "active": true,
         "browsers": [
             "last 1 version",
-            "> 1%",
+            "\u003e 1%",
             "ie 8",
             "ie 7"
         ]
@@ -51,7 +52,13 @@
         "debugInfo": false
     },
     "sitemap": false,
-    "gitHubPages": null,
     "less": null,
-    "optimiseSVG": true
+    "optimiseSVG": true,
+    "convertHtml": {
+        "default": null,
+        "ignoreUrls": null,
+        "extension": null,
+        "path": null,
+        "relativePaths": false
+    }
 }

@@ -1,8 +1,7 @@
-![Sassifaction logo](http://www.alwaystwisted.com/img/logo.png)
+Sass Scaffold
 
-#Sassifaction
+##Starting Sass Scaffold
 
-##My Base Mixture Project
+This is a starting point for any new Sass project. It's used mainly with Mixture &amp; Prepros. It's a working development so please feel free to suggest changes.
 
-
-Kiss my Sass.
+Credits to Stu Robinson for Sassification which is a major part of this.

@@ -1,15 +1,3 @@
-/*
-
-Horizontal Rules
-=====================
-
-<hr class="rule">
-<hr class="rule rule--dotted">
-<hr class="rule rule--dashed">
-<hr class="rule rule--ornament">
-
-*/
-
 .rule{
 	@include remit(margin-bottom, $doc-line-height);
 

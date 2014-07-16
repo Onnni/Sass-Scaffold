@@ -1,14 +1,3 @@
-/*
-
-Wells
-=====
-
-<div class="well">
-	<p>This is a well</p>
-</div>
-
-*/
-
 .well {
 	@include remit(margin-bottom, $doc-line-height);
 
