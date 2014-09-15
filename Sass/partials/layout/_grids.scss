@@ -4,31 +4,27 @@
   box-sizing: border-box;
 }
 
-.wrap {
-  max-width: 1037px;
-  margin: 0 auto;
-  // padding: 20px;
-}
-
 /*---------------------------------------------------*/
 
 // Change the grid settings
-$column: 66px;
-$gutter: 20px;
+$column: 67px;
+$gutter: 36px;
 $grid-columns: 12;
-$max-width: 1037px;
-$min-width: 1037px;
+$max-width: 1200px;
+$min-width: 1200px;
 
 $grid-namespace: "grid";
 $grid-column-namespace: "g-";
+$grid-width: $max-width;
 
 //generate our grid classes
 @for $i from 1 through $grid-columns {
  .#{$grid-column-namespace}#{$i} {
-  @include span-columns($i);
-    @include mq($to: tablet) {
-      @include fill-parent;
-      margin: 0;
+  @include fill-parent;
+  margin: 0;
+
+    @include mq($from: tablet) {
+      @include span-columns($i);
     }
   }
 }
@@ -36,14 +32,21 @@ $grid-column-namespace: "g-";
 //generate our push classes
 @for $i from 1 through $grid-columns {
  .p-#{$i} {
-  @include shift($i);
-    @include mq($to: desktop) {
-      @include shift(0);
+  @include shift(0);
+
+    @include mq($from: tablet) {
+      @include shift($i);
     }
   }
 }
 
 //generate our grid container with media queries, cos I'm swarve as.
 .#{$grid-namespace} {
+  @include clearfix;
+}
+
+.wrap {
+  max-width: $grid-width;
+  margin: 0 auto;
   @include clearfix;
 }

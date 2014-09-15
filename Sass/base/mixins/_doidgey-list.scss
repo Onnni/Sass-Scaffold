@@ -1,0 +1,17 @@
+@mixin list-grid($per-row, $spacing, $selector){
+    margin: 0 em(-$spacing/2);
+    @include clearfix;
+    //negate the display-inline biatch
+    letter-spacing: -0.31em;
+
+	> #{$selector} {
+        width: 100%/$per-row;
+        font-size: 16px;
+      	position: relative;
+        padding: 0 em($spacing/2) em($spacing) em($spacing/2);
+        display: inline-block;
+        vertical-align: top;
+      	letter-spacing: 0;
+        background-clip: content-box;
+    }
+}
