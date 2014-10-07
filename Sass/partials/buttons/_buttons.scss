@@ -176,7 +176,7 @@ $Placeholder-Selectors: ();
 		@else {
 
 		display: inline-block;
-		vertical-align: top;
+		vertical-align: middle;
 		text-decoration: none;
 		margin-right: -0.25em; /* Adjusts for spacing problem with inline-blocks */
 		*zoom: 1; /* trigger hasLayout for IE7 and below */
