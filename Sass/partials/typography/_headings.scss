@@ -2,26 +2,32 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: $header-font;
 }
 
-h1,  .h1 {
+/* Modular Scale
+	----------------------
+	16px @ 1:1.2	
+	6px @ 1:1.2	
+	----------------------*/
 
+h1,  .h1 {
+	@include font-size(37.151);
 }
 
 h2, .h2 {
-
+	@include font-size(27.648);
 }
 
 h3, .h3 {
-
+	@include font-size(23.040);
 }
 
 h4, .h4 {
-
+	@include font-size(19.200);
 }
 
 h5, .h5 {
-
+	@include font-size(17.916);
 }
 
 h6, .h6 {
-
+	@include font-size(16);
 }

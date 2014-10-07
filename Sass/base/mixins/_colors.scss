@@ -56,3 +56,22 @@
     }
   }
 }
+
+// Great little snippet I caught site of in a convo on Twitter: http://codepen.io/sturobson/pen/ocbLv
+@mixin rgba-background($hexcolor, $opacity: 1) {
+  @if $opacity == 1 {
+    background-color: $hexcolor;
+  }
+  @else {
+    background-color: $hexcolor;
+    background-color: rgba($hexcolor, $opacity); 
+  }
+}
+
+
+// .a {
+//   @include rgba-background(#333333, .5);
+// }
+// .b {
+//   @include rgba-background(orange);
+// }

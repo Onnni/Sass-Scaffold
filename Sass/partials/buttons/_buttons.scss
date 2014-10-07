@@ -142,67 +142,62 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-@mixin static($mixin-name, $extend: true) {
-	// set global variable if it doesn't already exist
-	$Placeholder-Selectors: () !global !default;
+$Placeholder-Selectors: ();
 
-	$selector: map-get($Placeholder-Selectors, $mixin-name);
-
-	@if $extend == true {
-		@if $selector == null {
-			$selector: unique-id();
-			$Placeholder-Selectors: map-merge($Placeholder-Selectors, ($mixin-name: $selector)) !global;
-
-			@at-root %#{$selector} {
-				@include static($mixin-name, false) {
-					@content;
-				};
-			}
-		}
-
-		@extend %#{$selector};
-	} @else {
-		@content;
+@mixin button($color, $extend: true) {
+	@include button-static($extend);
+	
+	background-color: $color;
+	color: $white;
+	border: 1px solid;
+	border-radius: 5px;
+	border-color: shade($color, 20%);
+	
+	&:hover {
+		background-color: shade($color, 20%);
+		border-color: shade($color, 40%);
 	}
 }
 
-@mixin button($color, $hover-color) {
-	@include static('button') {
-		border: 2px solid;
-     	display: inline-block;
+@mixin button-static($extend: true) {
+	$button-selector: map-get($Placeholder-Selectors, 'button');
+	
+	@if $extend == true {
+		@if $button-selector == null {
+			$button-selector: unique-id();
+			$Placeholder-Selectors: map-merge($Placeholder-Selectors, ('button': $button-selector)) !global;
+			
+			@at-root %#{$button-selector} {
+				@include button-static(false);
+			}
+		}
+		@extend %#{$button-selector};
+		}
+		@else {
 
-
-     	text-decoration: none;
-		font-family: $body-font;
-		@include transition (all 0.2s ease-in-out);
-
+		display: inline-block;
+		text-decoration: none;
+		
 		&:hover {
 			cursor: pointer;
 		}
 	}
-
-	color: $color;
-	border-color: $color;
-
-	&:hover {
-		border-color: $alt-2;
-		color: $hover-color;
-		background: {
-			color: $color;
-		}
-	}
 }
 
-//Example useable with other includes from above
-a.btn--red {
-	// This is our custom mixin. Choose main colour and hover colour
-	@include button($base-color, $white);
-	@include btn--large;
+.btn--test{
+	// this is how we call in the mixin - can be easily modded to take more arguments like...
+	// individual background / border / text colours
+	@include button($base-color);
 }
 
-//Example useable with other includes from above
-a.btn--white {
-	// This is our custom mixin. Choose main colour and hover colour
-	@include button($white, $base-color);
-	@include btn--large;
-}
+.btn--small{ @include btn--small; }
+
+.btn--large{ @include btn--large; }
+
+.btn--huge{ @include btn--huge; }
+
+.btn--alpha{ @include btn--alpha; }
+
+.btn--beta{ @include btn--beta; }
+
+.btn--gamma{ @include btn--gamma; }
