@@ -1,0 +1,13 @@
+{
+  "name": "sass-scaffold",
+  "version": "0.1.0",
+  "author": "Your Name",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-sass": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "matchdep": "^0.3.0"
+  }
+}
