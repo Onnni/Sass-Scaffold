@@ -2,111 +2,154 @@ module.exports = function(grunt) {
 
 	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-    // 1. All configuration goes here 
-    grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
+	var BUILD_DIR = '.';
+
+	// 1. All configuration goes here
+	grunt.initConfig({
+		pkg: grunt.file.readJSON('package.json'),
 
 		tag: {
-		  banner: '/*!\n' +
-		          ' * <%= pkg.name %>\n' +
-		          ' * @version <%= pkg.version %>\n' +
-		          ' */\n'
+			banner: '/*!\n' +
+			' * <%= pkg.name %>\n' +
+			' * @version <%= pkg.version %>\n' +
+			' */\n'
+		},
+
+		express: {
+			all: {
+				options: {
+					bases: [BUILD_DIR],
+					port: 3000,
+					hostname: "0.0.0.0",
+					livereload: true
+				}
+			}
+		},
+
+		svgmin: { //minimize SVG files
+			options: {
+				plugins: [
+				{ removeViewBox: false },
+				{ removeUselessStrokeAndFill: false }
+				]
+			},
+			dist: {
+				expand: true,
+				cwd: 'img/raw',
+				src: ['*.svg'],
+				dest: 'img',
+				ext: '.svg'
+			}
 		},
 
 		// Sass task
 		sass: {
 
-		  // Sass development options
-		  dev: {
-		    options: {
-		      style: 'expanded',
-		      banner: '/*\n <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> \n*/\n',
-		    },
-		    files: {
-		      'css/styles.css': 'Sass/styles.scss'
-		    }
-		  },
+			// Sass development options
+			dev: {
+				options: {
+					style: 'expanded',
+					compass: true,
+					banner: '/*\n <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> \n*/\n',
+				},
+				files: {
+					'css/styles.css': 'Sass/styles.scss'
+				}
+			},
 
-		  // Sass distribution options
-		  dist: {
-		    options: {
-		      style: 'compressed',
-		      banner: '/*\n <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> \n*/\n',
-		    },
-		    files: {
-		      'css/build/styles.css': 'Sass/styles.scss'
-		    }
-		  }
+			// Sass distribution options
+			dist: {
+				options: {
+					style: 'compressed',
+					compass: true,
+					banner: '/*\n <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> \n*/\n',
+				},
+				files: {
+					'css/build/styles.css': 'Sass/styles.scss'
+				}
+			}
 		},
 
 		css: {
-		    files: ['Sass/*.scss'],
-		    tasks: ['sass'],
-		    options: {
-		        spawn: false,
-		    }
+			files: ['Sass/*.scss'],
+			tasks: ['sass'],
+			options: {
+				spawn: false,
+			}
 		},
 
-        concat: {
-        	options: {
+		concat: {
+			options: {
 				banner: '/*\n <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> \n*/\n'
-			},   
-		    dist: {
-		        src: [
-		            'js/*.js', // All JS in the libs folder
-		            'js/scripts.js'  // This specific file
-		        ],
-		        dest: 'js/build/site.js',
-		    }
+			},
+			dist: {
+				//ensures all js files are compiled and scripts is last. Very important.
+				src: ['js/*.js', '!js/scripts.js', 'js/scripts.js'],
+				dest: 'js/build/site.js',
+			}
 		},
 
 		uglify: {
 			options: {
 				banner: '/*\n <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> \n*/\n'
 			},
-		    build: {
-		        src: 'js/build/site.js',
-		        dest: 'js/build/site.min.js'
-		    }
+			build: {
+				src: 'js/build/site.js',
+				dest: 'js/build/site.min.js'
+			}
 		},
 
 		// Watch files
 		watch: {
 
-		  // Watch .scss files
-		  sass: {
-		    files: ['Sass/**/*.scss'],
-		    tasks: ['sass:dev'],
-		  },
+			all: {
+				files: '**/*.html',
+				options: {
+					livereload: true
+				}
+			},
 
-		  // Live reload files
-		  livereload: {
-		    options: { livereload: true },
-		    files: [
-		      'css/**/*.css',
-		      '**/*.html',
-		    ]
-		  }
+			// Watch .scss files
+			sass: {
+				files: ['Sass/**/*.scss'],
+				tasks: ['sass:dev'],
+			},
+
+			js: {
+				files: ['**/scripts.js'],
+				tasks: ['concat','uglify']
+			},
+
+			// Live reload files
+			livereload: {
+				options: { livereload: true },
+				files: [
+				'css/**/*.css',
+				'**/*.html',
+				]
+			}
 		},
 
-    });
+		open: {
+			all: {
+				// Gets the port from the connect configuration
+				path: 'http://localhost:<%= express.all.options.port%>'
+			}
+		}
 
-    // 3. Where we tell Grunt we plan to use this plug-in.
-    // grunt.loadNpmTasks('grunt-contrib-concat');
-    // grunt.loadNpmTasks('grunt-contrib-uglify');
+	});
 
-    // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
-    grunt.registerTask('default', ['concat', 'uglify']);
+	grunt.registerTask('default', ['concat', 'uglify']);
 
-    // Create Default Task
 	grunt.registerTask('dev', [
-	  'sass:dev', // Compile Sass with dev settings
-	  'watch'
+	'sass:dev',
+	'express',
+	'open',
+	'watch'
 	]);
 
-	// Create Distribution Task
 	grunt.registerTask('dist', [
-	  'sass:dist' // Compile Sass with distribution settings
+	'sass:dist'
 	]);
 
 };
