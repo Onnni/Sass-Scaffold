@@ -11,6 +11,8 @@
 
 // - BASE -----------------------------
 
+@import 'compass';
+
 @mixin btn{
 	display:inline-block;
 	vertical-align:middle;
@@ -142,66 +144,118 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-$Placeholder-Selectors: ();
+$button-vars:(
+radius: 10px,
+small-pad: 0.75em 1.1em,
+normal-pad: 1.3em 2em,
+large-pad: 1em 2.5em,
+);
 
-@mixin button($color, $extend: true) {
-	@include button-static($extend);
-	
-	background-color: $color;
-	color: $white;
-	border: 1px solid;
-	border-radius: 5px;
-	border-color: shade($color, 20%);
-	
-	&:hover {
-		background-color: shade($color, 20%);
-		border-color: shade($color, 40%);
+@mixin button-basics{
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	cursor: pointer;
+	margin: 0 0 rem(30) 0;
+	font-weight: 500;
+	line-height: 1;
+	//white-space: nowrap;
+	border: none;
+	@include transition (all, 0.3s, ease-in-out);
+}
+
+@mixin buttonSize($size: normal){
+	@if $size == normal{
+		padding: map-get($button-vars, normal-pad);
+	}
+	@if $size == small{
+		padding: map-get($button-vars, small-pad);
+	}
+	@if $size == large{
+		padding: map-get($button-vars, large-pad);
+		font-size: rem(20);
 	}
 }
 
-@mixin button-static($extend: true) {
-	$button-selector: map-get($Placeholder-Selectors, 'button');
-	
-	@if $extend == true {
-		@if $button-selector == null {
-			$button-selector: unique-id();
-			$Placeholder-Selectors: map-merge($Placeholder-Selectors, ('button': $button-selector)) !global;
-			
-			@at-root %#{$button-selector} {
-				@include button-static(false);
-			}
-		}
-		@extend %#{$button-selector};
-		}
-		@else {
+@mixin buttonColor($bg-color: $comp-color, $font-color: $white, $type: solid){
 
-		display: inline-block;
-		vertical-align: middle;
-		text-decoration: none;
-		margin-right: -0.25em; /* Adjusts for spacing problem with inline-blocks */
-		*zoom: 1; /* trigger hasLayout for IE7 and below */
-  		*display: inline; /* the star targets only IE7 and below */
-		
-		&:hover {
-			cursor: pointer;
+	@if $type == solid {
+		background-color: $bg-color;
+		@include contrasted($bg-color);
+		@include contrasted($background-color: $bg-color);
+		&:hover{
+			background-color: shade($bg-color, 30%);
+			box-shadow: 0 0 6px 0 rgba(0,0,0,0.2);
+			text-decoration: none;
+		}
+		&:focus{
+			background-color: shade($bg-color, 30%);
+			box-shadow: 0 0 6px 0 rgba(0,0,0,0.2);
+			text-decoration: none;
+		}
+
+		&:active{
+			background-color: darken($bg-color, 5%);
+			box-shadow: inset 0 1px 2px 0 rgba(0,0,0,0.7);
+			text-decoration: none;
+		}
+	}
+	@if $type == border {
+		background-color: transparent;
+		border: 2px solid $bg-color;
+
+		&:link, &:visited{
+			color: $bg-color;
+		}
+
+		&:hover{
+			@include contrasted($background-color: $bg-color);
+		}
+
+		&:active{
+			border:2px solid darken($bg-color, 60%);
 		}
 	}
 }
 
-.btn--test{
-	// this is how we call in the mixin - can be easily modded to take more arguments like...
-	// individual background / border / text colours
-	@include button($base-color);
+@mixin borderRadius($radius) {
+	@include border-radius($radius);
 }
 
-.btn--small{ @include btn--small; }
 
-.btn--large{ @include btn--large; }
+a.btn, button.btn{
 
-.btn--huge{ @include btn--huge; }
+	&--large{
+		@include buttonSize($size: large);
+		@include button-basics;
+		@include borderRadius(10px);
+	}
 
-.btn--alpha{ @include btn--alpha; }
+	&--normal{
+		@include buttonSize($size: normal);
+		@include button-basics;
+		@include borderRadius(10px);
+	}
 
-.btn--beta{ @include btn--beta; }
+	&--small{
+		@include buttonSize($size: small);
+		@include button-basics;
+		@include borderRadius(10px);
+	}
 
-.btn--gamma{ @include btn--gamma; }
+	&.fw{
+		width: 100%;
+	}
+}
+
+// .btn--dblue{
+// 	@include buttonColor($bg-color: $dblue, $font-color: $white, $type: solid);
+// 	color: $white;
+// 	border: 0;
+// 	@include box-shadow(-2px 2px 0px shade($dblue, 25));
+//
+// 	&:focus,
+// 	&:hover{
+// 		@include box-shadow(-2px 2px 0px shade($dblue, 25));
+// 	}
+// }
