@@ -35,10 +35,21 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				expand: true,
-				cwd: 'img/raw',
+				cwd: 'img',
 				src: ['*.svg'],
 				dest: 'img',
 				ext: '.svg'
+			}
+		},
+
+		svgstore: {
+			options: {
+				prefix : 'shape-', // This will prefix each <g> ID
+			},
+			default : {
+				files: {
+					'img/svg-defs.svg': ['img/svgs/*.svg'],
+				}
 			}
 		},
 
@@ -84,7 +95,7 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				//ensures all js files are compiled and scripts is last. Very important.
-				src: ['js/*.js', '!js/scripts.js', 'js/scripts.js'],
+				src: ['js/jquery-ui.js', 'js/owl.carousel.js', 'js/*.js', '!js/scripts.js', 'js/scripts.js'],
 				dest: 'js/build/site.js',
 			}
 		},
@@ -146,6 +157,10 @@ module.exports = function(grunt) {
 	'express',
 	'open',
 	'watch'
+	]);
+
+	grunt.registerTask('svg', [
+	'svgstore'
 	]);
 
 	grunt.registerTask('dist', [
