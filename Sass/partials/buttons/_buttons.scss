@@ -11,7 +11,7 @@
 
 // - BASE -----------------------------
 
-@import 'compass';
+// @import "compass";
 
 @mixin btn{
 	display:inline-block;
@@ -161,7 +161,7 @@ large-pad: 1em 2.5em,
 	line-height: 1;
 	//white-space: nowrap;
 	border: none;
-	@include transition (all, 0.3s, ease-in-out);
+	@include transition (all 0.3s ease-in-out);
 }
 
 @mixin buttonSize($size: normal){
