@@ -44,7 +44,15 @@ module.exports = function(grunt) {
 
 		svgstore: {
 			options: {
-				prefix : 'shape-', // This will prefix each <g> ID
+				/*
+				prefix all icons with an unambiguous label
+				*/
+				prefix : 'shape-',
+				/* 
+				cleans fill, stroke, stroke-width attributes 
+				so that we can style them from CSS
+				*/
+				cleanup: true,
 			},
 			default : {
 				files: {

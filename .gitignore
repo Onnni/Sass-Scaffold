@@ -2,5 +2,7 @@ css
 .DS_Store
 css/styles.css
 css/styles.min.css
-
+node_modules
 .sass-cache
+prepros.cfg
+mixture.json
