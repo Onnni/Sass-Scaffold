@@ -69,9 +69,11 @@
 }
 
 
-// .a {
-//   @include rgba-background(#333333, .5);
-// }
-// .b {
-//   @include rgba-background(orange);
-// }
+// This makes pulling out nested color maps much cleaner and easier. 
+// for instance:  
+// background-color: map-get(map-get($color, site-footer), bg); - becomes:
+// background-color: color(site-footer, bg);
+// see: https://medium.com/@ryanhavoc/clean-colour-management-with-sass-4d5e9bb4f1b2
+@function color($el, $color, $map: $colors) {
+    @return map-get(map-get($map, $el), $color);
+}
